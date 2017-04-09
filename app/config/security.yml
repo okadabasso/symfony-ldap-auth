@@ -1,0 +1,34 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        assets:
+            pattern: ^/(css|images|js)/
+            security: false
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        login:
+            pattern: ^/login$
+            security: false
+            anonymous: ~
+        main:
+            pattern: ^/
+            provider: user_provider
+            form_login_ldap:
+                check_path: /login_check
+                login_path: /login
+                service: ldap
+                dn_string: 'uid={username},ou=users,dc=example,dc=com'
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path:   /logout
+                target: /
+                invalidate_session: true                
+    providers:
+        user_provider:
+            id: app.user_provider
+    access_control:
+        - { path: ^/group, roles: managers}
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY}
