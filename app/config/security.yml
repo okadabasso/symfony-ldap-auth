@@ -30,6 +30,6 @@ security:
         user_provider:
             id: app.user_provider
     access_control:
-        - { path: ^/groups, roles: ROLE_ADMIN }
+        - { path: ^/groups, roles: ROLE_managers}
         - { path: ^/users, roles: ROLE_USERS }
         #- { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY}
