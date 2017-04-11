@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+{{ form_start(form, {'action': path('groups_update')} ) }}
+<div class="form-group">
+    {{ form_label(form.cn) }}
+    {{ form_errors(form.cn) }}
+    {{ form_widget(form.cn) }}
+</div>
+{{ form_end(form) }}
+{% endblock %}

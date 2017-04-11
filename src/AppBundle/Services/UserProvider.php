@@ -40,7 +40,10 @@ class UserProvider  implements UserProviderInterface{
 		$groupEntries = $this->findGroupEntries($userDn);
 		$groups = [];
         foreach ($groupEntries as $groupEntry){
-        	$groups[] = $groupEntry->getAttribute("cn")[0];
+        	if($groupEntry->getDn() === $this->options["manager_group"]){
+        		$groups[] = "ROLE_ADMIN";
+        		
+        	}
         }
 		
 		

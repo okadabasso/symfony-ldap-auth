@@ -15,7 +15,11 @@
     <body>
     	<header class="navbar">
     		<div class="container">
-    			<a href="/" class="navbar-brand">account manager</a>
+    			<a href="{{ path('homepage') }}" class="navbar-brand">account manager</a>
+    			
+    				<ul class="nav navbar-nav navbar-right">
+    					<li><a href="{{ path('logout') }}">ログアウト</a></li>
+    				</ul>
     		</div>
     	</header>
     	<div class="container">

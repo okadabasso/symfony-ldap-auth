@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
-{{dump(options)}}
-{% for group in groups %}
-<p>{{ group.getAttribute("cn")[0] }}</p>
-{% endfor %}
+    {% for group in groups %}
+    <p><a href="{{ path("groups_edit",{ 'cn': group.getAttribute("cn")[0] }) }}" >{{ group.getAttribute("cn")[0] }}</a></p>
+    {% endfor %}
 {% endblock %}

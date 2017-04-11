@@ -18,23 +18,38 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
 
-       
-    ldap.user.base_dn: ou=users,dc=example,dc=com
-    ldap.user.attributes: 
-        uid: {type: "text", label: "user id", read_only: true}
-        cn: {type: "text", label: "common name"}
-        sn: {type: "text", label: "surname"}
-        givenname: {type: "text", label: "given name"}
-        mail: {type: "text", label: "mail"}
-        userpassword: {type: "password", label: "user password"}
-    ldap.groups:
-      base_dn: 'ou=groups,dc=example,dc=com'
-      attributes:
-        cn:
-            type: text
-            label: 'common name'
-        ou:
-            type: text
-            label: 'organization unit'
-      
-         
+    ldap:
+        search_dn: 'cn=app1,ou=applications,dc=example,dc=com'
+        search_password: app1pass
+        users:
+            base_dn: 'ou=users,dc=example,dc=com'
+            filter: (uid={username})
+            attributes:
+                uid:
+                    type: text
+                    label: 'user id'
+                    read_only: true
+                cn:
+                    type: text
+                    label: 'common name'
+                sn:
+                    type: text
+                    label: surname
+                givenname:
+                    type: text
+                    label: 'given name'
+                mail:
+                    type: text
+                    label: mail
+                userpassword:
+                    type: password
+                    label: 'user password'
+		groups:
+	        base_dn: 'ou=groups,dc=example,dc=com'
+	        attributes:
+	            cn:
+	                type: text
+	                label: 'common name'
+	            ou:
+	                type: text
+	                label: 'organization unit'

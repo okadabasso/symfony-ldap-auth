@@ -5,7 +5,8 @@ use Symfony\Component\Ldap\Ldap;
 use JMS\DiExtraBundle\Annotation\Inject;
 use JMS\DiExtraBundle\Annotation\InjectParams;
 use JMS\DiExtraBundle\Annotation\Service;
-
+use Symfony\Component\Ldap\Entry;
+    
 /**
  * @Service("app.group_register_service")
  */
@@ -50,4 +51,29 @@ use JMS\DiExtraBundle\Annotation\Service;
 		$groupEntries = $query->execute()->toArray();
 		return $groupEntries;
 	}
-}
+ 	public function getGroup($cn){
+        $this->ldap->bind($this->options["search_dn"], $this->options["search_password"]);
+        $query = $this->ldap->query(
+            "ou=groups,dc=example,dc=com",
+            "cn={$cn}",
+            ["filter" =>["cn","ou"]]);
+        $groupEntries = $query->execute()->toArray();
+        if($groupEntries){
+            return $groupEntries[0];
+        }
+        return null;
+	}
+  	public function update($data){
+        $this->ldap->bind("uid=administrator,ou=users,dc=example,dc=com", "administrator");
+        $entryManager = $this->ldap->getEntryManager();
+        
+        $dn = "cn={$data["cn"]},ou=groups,dc=example,dc=com";
+        $entry = new Entry($dn, [
+            "cn" => [$data["cn"]],
+            "ou" => [$data["ou"]],
+            "member"=> ["uid=testuser01,ou=users,dc=example,dc=com"]
+        ]);
+        $entryManager->update($entry);
+        
+	}
+ }
